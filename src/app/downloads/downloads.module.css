@@ -1,0 +1,21 @@
+.hero { padding: 140px 0 80px; background: linear-gradient(135deg, #111111 0%, #1f1f1f 60%, #2a1f08 100%); position: relative; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(200,150,12,0.07) 0%, transparent 65%); }
+
+.notice { display: flex; align-items: center; gap: 12px; background: rgba(200,150,12,0.08); border: 1px solid rgba(200,150,12,0.25); border-radius: 10px; padding: 16px 20px; margin-bottom: 40px; }
+.notice p { font-size: 14px; color: #595959; margin: 0; }
+.notice p a { color: #0B65B5; font-weight: 600; }
+
+.downloadCard { display: flex; align-items: center; gap: 14px; background: #fff; border-radius: 12px; padding: 18px 20px; border: 1px solid rgba(0,0,0,0.07); box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: all 0.2s; }
+.downloadCard:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.1); border-color: rgba(200,150,12,0.2); transform: translateY(-2px); }
+.docIcon { font-size: 28px; color: #0B65B5; flex-shrink: 0; }
+.docInfo { flex: 1; }
+.docName { font-size: 13.5px; font-weight: 600; color: #1A1A1A; margin-bottom: 3px; line-height: 1.3; }
+.docType { font-size: 11.5px; color: #8C8C8C; }
+.downloadBtn { width: 36px; height: 36px; border-radius: 8px; background: #F5F4F0; border: none; color: #0B65B5; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+.downloadBtn:hover { background: #0B65B5; color: #000; }
+
+.contactCta { margin-top: 60px; text-align: center; padding: 48px; background: #F5F4F0; border-radius: 16px; }
+.contactCta h3 { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 700; color: #1A1A1A; margin-bottom: 10px; }
+.contactCta p { font-size: 15px; color: #595959; margin-bottom: 20px; }
+.emailBtn { display: inline-block; padding: 12px 28px; background: #0B65B5; color: #000; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+.emailBtn:hover { background: #2A85D6; }

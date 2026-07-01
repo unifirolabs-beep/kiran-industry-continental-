@@ -1,0 +1,38 @@
+.hero { padding: 140px 0 80px; background: linear-gradient(135deg, #111111 0%, #1f1f1f 60%, #2a1f08 100%); position: relative; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(200,150,12,0.07) 0%, transparent 65%); }
+.bodyText { font-size: 15.5px; color: #595959; line-height: 1.8; margin-bottom: 28px; }
+
+.infraGrid { display: flex; flex-direction: column; gap: 14px; }
+.infraCard { display: flex; gap: 12px; align-items: flex-start; background: #fff; padding: 14px 18px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.05); }
+.infraIcon { font-size: 16px !important; color: #0B65B5 !important; margin-top: 2px; flex-shrink: 0; }
+.infraLabel { font-size: 14px; font-weight: 600; color: #1A1A1A; margin-bottom: 2px; }
+.infraDesc { font-size: 12.5px; color: #8C8C8C; }
+
+.imageGrid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 280px 180px; gap: 12px; }
+.imgLarge { grid-column: 1/3; position: relative; border-radius: 12px; overflow: hidden; }
+.imgSmall { position: relative; border-radius: 12px; overflow: hidden; }
+
+.capacityGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; }
+@media (max-width: 768px) { .capacityGrid { grid-template-columns: repeat(2, 1fr); } }
+.capacityCard { background: #1A1A1A; padding: 40px 32px; text-align: center; transition: background 0.2s; }
+.capacityCard:hover { background: #202020; }
+.capacityValue { font-family: 'Outfit', sans-serif; font-size: 52px; font-weight: 900; color: #0B65B5; line-height: 1; margin-bottom: 4px; }
+.capacityUnit { font-size: 22px; font-weight: 600; margin-left: 4px; }
+.capacityLabel { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.capacityDesc { font-size: 12px; color: rgba(255,255,255,0.45); }
+
+.processSteps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 900px) { .processSteps { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .processSteps { grid-template-columns: 1fr; } }
+
+.processCard { background: #fff; border-radius: 14px; padding: 28px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: all 0.3s; }
+.processCard:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.1); border-color: rgba(200,150,12,0.2); }
+.processStep { font-family: 'Outfit', sans-serif; font-size: 44px; font-weight: 900; color: rgba(200,150,12,0.2); line-height: 1; margin-bottom: 14px; }
+.processTitle { font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700; color: #1A1A1A; margin-bottom: 8px; }
+.processDesc { font-size: 13.5px; color: #595959; line-height: 1.7; }
+
+.ctaSection { padding: 80px 0; background: linear-gradient(135deg, #0B65B5, #2A85D6); }
+.ctaTitle { font-family: 'Outfit', sans-serif; font-size: 36px; font-weight: 800; color: #000; margin-bottom: 12px; }
+.ctaSubtitle { font-size: 16px; color: rgba(0,0,0,0.65); margin-bottom: 32px; }
+.ctaBtn { padding: 14px 32px; background: #000; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.2s; }
+.ctaBtn:hover { background: #1A1A1A; transform: translateY(-1px); }

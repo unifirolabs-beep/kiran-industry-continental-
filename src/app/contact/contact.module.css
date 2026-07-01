@@ -1,0 +1,16 @@
+.hero { padding: 140px 0 80px; background: linear-gradient(135deg, #111111 0%, #1f1f1f 60%, #2a1f08 100%); position: relative; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(200,150,12,0.07) 0%, transparent 65%); }
+
+.infoCard { background: #fff; border-radius: 16px; padding: 28px; text-align: center; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 2px 10px rgba(0,0,0,0.04); transition: all 0.3s; height: 100%; }
+.infoCard:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(0,0,0,0.1); border-color: rgba(200,150,12,0.2); }
+.infoIcon { font-size: 30px; color: #0B65B5; margin-bottom: 12px; }
+.infoTitle { font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700; color: #1A1A1A; margin-bottom: 8px; }
+.infoText { font-size: 14px; color: #595959; line-height: 1.7; }
+.infoText a { color: #0B65B5; text-decoration: none; }
+.infoText a:hover { text-decoration: underline; }
+
+.formCard { background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.07); border: 1px solid rgba(0,0,0,0.06); }
+
+.mapWrap { width: 100%; height: 380px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 4px 20px rgba(0,0,0,0.07); margin-bottom: 16px; }
+
+.mapAddress { font-size: 14px; color: #595959; padding: 14px 16px; background: #F5F4F0; border-radius: 8px; }

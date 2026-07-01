@@ -1,0 +1,20 @@
+.hero { padding: 140px 0 80px; background: linear-gradient(135deg, #111111 0%, #1f1f1f 60%, #2a1f08 100%); position: relative; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(200,150,12,0.07) 0%, transparent 65%); }
+
+.certCard { background: #fff; border-radius: 16px; padding: 36px; border: 1px solid rgba(0,0,0,0.07); box-shadow: 0 2px 12px rgba(0,0,0,0.05); transition: all 0.3s; border-top: 4px solid; height: 100%; }
+.certCard:hover { transform: translateY(-5px); box-shadow: 0 14px 44px rgba(0,0,0,0.11); }
+.certIcon { font-size: 40px; margin-bottom: 14px; }
+.certCode { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 10px; }
+.certTitle { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 700; color: #1A1A1A; margin-bottom: 12px; }
+.certDesc { font-size: 14px; color: #595959; line-height: 1.7; margin-bottom: 16px; }
+.certScope { font-size: 12.5px; color: #8C8C8C; padding-top: 14px; border-top: 1px solid #f0f0f0; line-height: 1.6; }
+
+.certImageWrap { position: relative; height: 400px; border-radius: 16px; overflow: hidden; margin-bottom: 72px; }
+.certImageOverlay { position: absolute; inset: 0; background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center; }
+.certImageTitle { font-family: 'Outfit', sans-serif; font-size: 32px; font-weight: 800; color: #fff; text-align: center; max-width: 600px; letter-spacing: -0.02em; }
+
+.whySection { padding-top: 32px; }
+.whyCard { background: #F5F4F0; border-radius: 14px; padding: 28px; transition: all 0.3s; }
+.whyCard:hover { background: #fff; box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-3px); }
+.whyTitle { font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 700; color: #1A1A1A; margin-bottom: 8px; }
+.whyDesc { font-size: 14px; color: #595959; line-height: 1.7; }

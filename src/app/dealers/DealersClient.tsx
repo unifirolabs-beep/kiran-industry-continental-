@@ -1,7 +1,10 @@
+'use client';
+
 import React from 'react';
-import { Form, Input, Select, Button, Row, Col, App } from 'antd';
-import { TrophyOutlined, CustomerServiceOutlined, CarOutlined, ToolOutlined } from '@ant-design/icons';
+import { Form, Input, Select, InputNumber, Button, Row, Col, App } from 'antd';
+import { CheckCircleFilled, ArrowRightOutlined, TrophyOutlined, CustomerServiceOutlined, CarOutlined, ToolOutlined } from '@ant-design/icons';
 import { company } from '@/data/company';
+import styles from './dealers.module.css';
 
 const { TextArea } = Input;
 
@@ -13,43 +16,27 @@ const dealerBenefits = [
 ];
 
 export default function DealersPage() {
-  const orgSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    'name': 'Kiran Industries',
-    'url': 'https://www.kiscontinental.com',
-    'logo': 'https://www.kiscontinental.com/favicon.ico',
-    'description': 'Kiran Industries manufacturers premium Continental brand tile adhesives, dry mix mortars, ready plasters, and super grouts.'
-  };
+  const { message } = App.useApp();
+  const [form] = Form.useForm();
+  const [loading, setLoading] = React.useState(false);
 
-  const breadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'Home',
-        'item': 'https://www.kiscontinental.com'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'Dealers',
-        'item': 'https://www.kiscontinental.com/dealers'
-      }
-    ]
+  const onFinish = async () => {
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 1200));
+    setLoading(false);
+    message.success('Thank you! Our team will contact you within 24 hours.');
+    form.resetFields();
   };
 
   return (
     <>
-      <section className="pt-[140px] pb-20 bg-gradient-to-br from-[#111111] via-[#1f1f1f] to-[#2a1f08] relative after:content-[''] after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_70%_50%,rgba(11,101,181,0.07)_0%,transparent_65%)]">
+      <section className={styles.hero}>
         <div className="container">
           <div className="page-hero__label">Dealer Network</div>
           <h1 className="page-hero__title">
             Partner with
             <br />
-            <span className="text-primary">Continental</span>
+            <span style={{ color: '#0B65B5' }}>Continental</span>
           </h1>
           <p className="page-hero__subtitle">
             Join South India&apos;s fastest-growing construction material brand as an authorized dealer
@@ -68,10 +55,10 @@ export default function DealersPage() {
           <Row gutter={[24, 24]}>
             {dealerBenefits.map((b) => (
               <Col xs={24} sm={12} lg={6} key={b.title}>
-                <div className="bg-white rounded-2xl p-8 text-center border border-black/6 shadow-[0_2px_10px_rgba(0,0,0,0.04)] transition-all duration-300 h-full hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.1)]">
-                  <div className="text-[36px] text-primary mb-4">{b.icon}</div>
-                  <h3 className="font-display text-lg font-bold text-[#1A1A1A] mb-2">{b.title}</h3>
-                  <p className="text-sm text-[#595959] leading-relaxed">{b.desc}</p>
+                <div className={styles.benefitCard}>
+                  <div className={styles.benefitIcon}>{b.icon}</div>
+                  <h3 className={styles.benefitTitle}>{b.title}</h3>
+                  <p className={styles.benefitDesc}>{b.desc}</p>
                 </div>
               </Col>
             ))}
@@ -86,17 +73,17 @@ export default function DealersPage() {
             <div className="section-label" style={{ justifyContent: 'center' }}>Process</div>
             <h2 className="section-title section-title--white">How to Become a Dealer</h2>
           </div>
-          <div className="grid grid-cols-4 gap-[1px] bg-white/5 rounded-2xl overflow-hidden max-[900px]:grid-cols-2 max-[900px]:bg-transparent max-[900px]:gap-4 max-[900px]:p-0 max-[480px]:grid-cols-1 max-[480px]:bg-transparent max-[480px]:gap-4 max-[480px]:p-0">
+          <div className={styles.stepsGrid}>
             {[
               { num: '01', title: 'Submit Application', desc: 'Fill out the dealer registration form below with your business details.' },
               { num: '02', title: 'Team Review', desc: 'Our regional sales team reviews your application within 48 hours.' },
               { num: '03', title: 'Meeting & Presentation', desc: 'We schedule a meeting to discuss territory, products, and terms.' },
               { num: '04', title: 'Onboarding & Training', desc: 'Sign agreement, receive product training, and start selling.' },
             ].map((step) => (
-              <div key={step.num} className="group bg-[#1A1A1A] py-9 px-7 border border-white/[0.03] relative transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-gradient-to-br hover:from-primary hover:to-primary-light hover:-translate-y-1.5 hover:shadow-[0_16px_36px_rgba(11,101,181,0.3)] hover:border-white/25 hover:z-10 max-[900px]:rounded-xl max-[900px]:border-white/8 max-[480px]:rounded-xl max-[480px]:border-white/8">
-                <div className="font-display text-[52px] font-black text-primary/20 leading-none mb-4 tracking-tight transition-colors duration-400 group-hover:text-white/25">{step.num}</div>
-                <h3 className="font-display text-[17px] font-bold text-white mb-2 transition-colors duration-400">{step.title}</h3>
-                <p className="text-[13.5px] text-white/50 leading-relaxed transition-colors duration-400 group-hover:text-white/95">{step.desc}</p>
+              <div key={step.num} className={styles.stepCard}>
+                <div className={styles.stepNum}>{step.num}</div>
+                <h3 className={styles.stepTitle}>{step.title}</h3>
+                <p className={styles.stepDesc}>{step.desc}</p>
               </div>
             ))}
           </div>
@@ -110,23 +97,23 @@ export default function DealersPage() {
             <Col xs={24} lg={10}>
               <div className="section-label">Registration</div>
               <h2 className="section-title">Dealer Registration Form</h2>
-              <p className="text-[15px] text-[#595959] leading-relaxed mb-7">
+              <p className={styles.formIntro}>
                 Ready to join the Continental family? Fill out this form and our team will reach out
                 within 24 working hours to discuss dealership terms for your area.
               </p>
-              <div className="flex flex-col gap-3">
-                <div className="flex gap-3 items-center text-sm">
-                  <span className="font-semibold text-[#1A1A1A] min-w-[50px]">Phone</span>
-                  <a href={`tel:${company.contact.phone1.replace(/\s+/g, '')}`} className="text-primary no-underline hover:underline">{company.contact.phone1}</a>
+              <div className={styles.contactInfo}>
+                <div className={styles.contactItem}>
+                  <span className={styles.contactLabel}>Phone</span>
+                  <a href={`tel:${company.contact.phone1.replace(/\s+/g, '')}`}>{company.contact.phone1}</a>
                 </div>
-                <div className="flex gap-3 items-center text-sm">
-                  <span className="font-semibold text-[#1A1A1A] min-w-[50px]">Email</span>
-                  <a href={`mailto:${company.contact.email1}`} className="text-primary no-underline hover:underline">{company.contact.email1}</a>
+                <div className={styles.contactItem}>
+                  <span className={styles.contactLabel}>Email</span>
+                  <a href={`mailto:${company.contact.email1}`}>{company.contact.email1}</a>
                 </div>
               </div>
             </Col>
             <Col xs={24} lg={14}>
-              <div className="bg-white rounded-2xl p-9 shadow-[0_4px_20px_rgba(0,0,0,0.07)] border border-black/6">
+              <div className={styles.formCard}>
                 <Form form={form} layout="vertical" onFinish={onFinish} requiredMark={false}>
                   <Row gutter={16}>
                     <Col xs={24} sm={12}>

@@ -1,12 +1,33 @@
 import React from 'react';
 import { company } from '@/data/company';
 
-export const metadata = {
-  title: 'Terms of Service — Kiran Industries | Continental',
-  description: 'Terms of Service for Kiran Industries website and Continental brand products.',
-};
+export const metadata = buildMetadata({
+  title: 'Terms & Conditions | Kiran Industries | Continental',
+  description: 'Read the terms of use and conditions for the Kiran Industries website and Continental brand construction material products and services.',
+  path: '/terms',
+  keywords: 'Terms and conditions Kiran Industries, website terms of use, legal agreements',
+});
 
 export default function TermsPage() {
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      {
+        '@type': 'ListItem',
+        'position': 1,
+        'name': 'Home',
+        'item': 'https://www.kiscontinental.com'
+      },
+      {
+        '@type': 'ListItem',
+        'position': 2,
+        'name': 'Terms of Service',
+        'item': 'https://www.kiscontinental.com/terms'
+      }
+    ]
+  };
+
   return (
     <>
       <section className="pt-[140px] pb-20 bg-gradient-to-br from-[#111111] via-[#1f1f1f] to-[#2a1f08] relative after:content-[''] after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_70%_50%,rgba(11,101,181,0.07)_0%,transparent_65%)]">

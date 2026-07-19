@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { Row, Col } from 'antd';
 import { SafetyCertificateOutlined } from '@ant-design/icons';
@@ -7,6 +5,25 @@ import { certifications } from '@/data/company';
 import Image from 'next/image';
 
 export default function CertificationsPage() {
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      {
+        '@type': 'ListItem',
+        'position': 1,
+        'name': 'Home',
+        'item': 'https://www.kiscontinental.com'
+      },
+      {
+        '@type': 'ListItem',
+        'position': 2,
+        'name': 'Certifications',
+        'item': 'https://www.kiscontinental.com/certifications'
+      }
+    ]
+  };
+
   return (
     <>
       <section className="pt-[140px] pb-20 bg-gradient-to-br from-[#111111] via-[#1f1f1f] to-[#2a1f08] relative after:content-[''] after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_70%_50%,rgba(11,101,181,0.07)_0%,transparent_65%)]">

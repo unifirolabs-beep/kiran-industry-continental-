@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   },
   description:
     'Kiran Industries manufactures Continental brand tile adhesives, ready plaster, block joint mortar and super grouts. ISO-certified, 20 TPH capacity plant in Manvi, Karnataka.',
-  keywords: ['tile adhesive', 'continental', 'kiran industries', 'ready plaster', 'block joint mortar', 'super grout', 'construction chemicals'],
+  keywords: ['tile adhesive', 'continental', 'kiran industries', 'ready plaster', 'block joint mortar', 'super grout', 'construction chemicals', 'kis', 'continental tile adhesive', 'continental dry mix mortar', 'continental ready plaster', 'continental construction chemicals', 'continental construction materials', 'kis continental', 'kis continental tile adhesive', 'kis continental dry mix mortar', 'kis continental ready plaster', 'kis continental construction chemicals', 'kis continental construction materials', 'continental', 'kis', 'kis continental construction', 'kis continental'],
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',

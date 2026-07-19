@@ -7,7 +7,7 @@ export const metadata = buildMetadata({
   title: 'Kiran Industries | Continental Construction Materials',
   description: 'Kiran Industries manufactures Continental brand tile adhesives, ready plaster, and dry mix mortars at our 20 TPH plant in Manvi, Karnataka, India.',
   path: '/',
-  keywords: 'Kiran Industries, Continental Tile Adhesive, Tile Adhesive Manufacturer Karnataka, Dry Mix Mortar Manufacturer, Construction Chemicals, Construction Materials',
+  keywords: 'Kiran Industries, Continental Tile Adhesive, Tile Adhesive Manufacturer Karnataka, Dry Mix Mortar Manufacturer, Construction Chemicals, Construction Materials, KIS Continental, kis continental, kiscontinental, Continental, kis',
 });
 
 export default function HomePage() {

@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Button, Drawer } from 'antd';
-import { MenuOutlined, CloseOutlined, PhoneOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import { MenuOutlined, PhoneOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -22,16 +22,48 @@ const menuItems = [
 
 export default function Navbar() {
   const pathname = usePathname();
+
   const [scrolled, setScrolled] = useState(false);
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
-  const navClass = [styles.navbar, scrolled ? styles.navbarScrolled : ''].join(' ');
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, []);
+
+  const navClass = [
+    styles.navbar,
+    scrolled ? styles.navbarScrolled : '',
+  ].join(' ');
 
   return (
     <>
@@ -40,15 +72,16 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className={styles.logoWrapper}>
             <div className={styles.logoImageWrapper}>
-              <Image 
-                src="/logo/image.png" 
-                alt="Kiran Industries" 
-                width={44} 
-                height={44} 
+              <Image
+                src="/logo/image.png"
+                alt="Kiran Industries"
+                width={44}
+                height={44}
+                priority
                 className={styles.logoIcon}
-                priority 
               />
             </div>
+
             <div className={styles.logoTextContainer}>
               <span className={styles.logoBrandText}>KIRAN</span>
               <span className={styles.logoSubText}>INDUSTRIES</span>
@@ -63,7 +96,9 @@ export default function Navbar() {
                   href={item.key}
                   className={[
                     styles.menuItem,
-                    pathname === item.key ? styles.menuItemActive : '',
+                    pathname === item.key
+                      ? styles.menuItemActive
+                      : '',
                   ].join(' ')}
                 >
                   {item.label}
@@ -72,21 +107,27 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* CTA */}
+          {/* Desktop Actions */}
           <div className={styles.navActions}>
-            <a href={`tel:${company.contact.phone1.replace(/\s+/g, '')}`} className={styles.phoneLink}>
+            <a
+              href={`tel:${company.contact.phone1.replace(/\s+/g, '')}`}
+              className={styles.phoneLink}
+            >
               <PhoneOutlined />
               <span>{company.contact.phone1}</span>
             </a>
-            <Link href="/request-quote">
-              <Button type="primary" className={styles.ctaBtn}>
-                Get Quote
-              </Button>
+
+            <Link
+              href="/request-quote"
+              className={styles.ctaBtn}
+            >
+              Get Quote
             </Link>
+
             <button
               className={styles.hamburger}
-              onClick={() => setDrawerOpen(true)}
-              aria-label="Open menu"
+              aria-label="Open Menu"
+              onClick={() => setMobileOpen(true)}
             >
               <MenuOutlined />
             </button>
@@ -94,64 +135,97 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Drawer */}
-      <Drawer
-        title={
-          <Link href="/" className={styles.logoWrapper} onClick={() => setDrawerOpen(false)}>
+      {/* Overlay */}
+      <div
+        className={`${styles.mobileOverlay} ${
+          mobileOpen ? styles.mobileOverlayShow : ''
+        }`}
+        onClick={() => setMobileOpen(false)}
+      />
+
+      {/* Mobile Menu */}
+      <aside
+        className={`${styles.mobileDrawer} ${
+          mobileOpen ? styles.mobileDrawerOpen : ''
+        }`}
+      >
+        {/* Header */}
+        <div className={styles.mobileHeader}>
+          <Link
+            href="/"
+            className={styles.logoWrapper}
+            onClick={() => setMobileOpen(false)}
+          >
             <div className={styles.logoImageWrapper}>
-              <Image 
-                src="/logo/image.png" 
-                alt="Kiran Industries" 
-                width={40} 
-                height={40} 
+              <Image
+                src="/logo/image.png"
+                alt="Kiran Industries"
+                width={40}
+                height={40}
                 className={styles.logoIcon}
               />
             </div>
+
             <div className={styles.logoTextContainer}>
               <span className={styles.logoBrandText}>KIRAN</span>
               <span className={styles.logoSubText}>INDUSTRIES</span>
             </div>
           </Link>
-        }
-        placement="right"
-        onClose={() => setDrawerOpen(false)}
-        open={drawerOpen}
-        size="default"
-        closeIcon={<CloseOutlined style={{ color: '#ffffff' }} />}
-        style={{ background: '#111111' }}
-        styles={{ 
-          body: { padding: '24px 0', background: '#111111' }, 
-          header: { borderBottom: '1px solid rgba(255, 255, 255, 0.08)', background: '#111111', color: '#ffffff' },
-          mask: { backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }
-        }}
-      >
+
+          <button
+            className={styles.closeBtn}
+            onClick={() => setMobileOpen(false)}
+            aria-label="Close Menu"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Links */}
         <ul className={styles.mobileMenu}>
           {menuItems.map((item) => (
             <li key={item.key}>
               <Link
                 href={item.key}
+                onClick={() => setMobileOpen(false)}
                 className={[
                   styles.mobileMenuItem,
-                  pathname === item.key ? styles.mobileMenuItemActive : '',
+                  pathname === item.key
+                    ? styles.mobileMenuItemActive
+                    : '',
                 ].join(' ')}
-                onClick={() => setDrawerOpen(false)}
               >
                 {item.label}
               </Link>
             </li>
           ))}
         </ul>
+
+        {/* Footer */}
         <div className={styles.drawerFooter}>
-          <a href={`tel:${company.contact.phone1.replace(/\s+/g, '')}`} className={styles.drawerPhone}>
-            <PhoneOutlined /> {company.contact.phone1}
+          <a
+            href={`tel:${company.contact.phone1.replace(/\s+/g, '')}`}
+            className={styles.drawerPhone}
+          >
+            <PhoneOutlined />
+            {company.contact.phone1}
           </a>
-          <Link href="/request-quote" onClick={() => setDrawerOpen(false)}>
-            <Button type="primary" block size="large" className={styles.ctaBtn}>
+
+          <Link
+            href="/request-quote"
+            onClick={() => setMobileOpen(false)}
+          >
+            <Button
+              type="primary"
+              block
+              size="large"
+              className={styles.ctaBtn}
+            >
               Get a Quote
             </Button>
           </Link>
         </div>
-      </Drawer>
+      </aside>
     </>
   );
 }

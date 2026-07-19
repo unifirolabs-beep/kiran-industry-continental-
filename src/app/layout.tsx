@@ -4,10 +4,20 @@ import Providers from './Providers';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
-  title: 'Kiran Industries | Continental — Premium Tile Adhesives & Dry Mix Products',
+  metadataBase: new URL('https://www.kiscontinental.com'),
+  title: {
+    default: 'Kiran Industries | Continental — Premium Tile Adhesives & Dry Mix Products',
+    template: '%s | Continental',
+  },
   description:
     'Kiran Industries manufactures Continental brand tile adhesives, ready plaster, block joint mortar and super grouts. ISO-certified, 20 TPH capacity plant in Manvi, Karnataka.',
-  keywords: 'tile adhesive, continental, kiran industries, ready plaster, block joint mortar, super grout, construction chemicals',
+  keywords: ['tile adhesive', 'continental', 'kiran industries', 'ready plaster', 'block joint mortar', 'super grout', 'construction chemicals'],
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
@@ -20,7 +30,6 @@ export default function RootLayout({
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

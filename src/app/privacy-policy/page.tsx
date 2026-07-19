@@ -1,15 +1,39 @@
 import React from 'react';
 import { company } from '@/data/company';
+import { buildMetadata } from '@/utils/seo';
+import JsonLd from '@/components/JsonLd';
 import styles from './legal.module.css';
 
-export const metadata = {
-  title: 'Privacy Policy — Kiran Industries | Continental',
-  description: 'Privacy Policy for Kiran Industries website and Continental brand products.',
-};
+export const metadata = buildMetadata({
+  title: 'Privacy Policy | Kiran Industries Continental Brand',
+  description: 'Read the privacy policy for Kiran Industries and Continental brand websites, detailing how we collect, use, and protect customer information.',
+  path: '/privacy-policy',
+  keywords: 'Privacy policy Kiran Industries, legal terms, personal data security, cookies policy',
+});
 
 export default function PrivacyPolicyPage() {
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      {
+        '@type': 'ListItem',
+        'position': 1,
+        'name': 'Home',
+        'item': 'https://www.kiscontinental.com'
+      },
+      {
+        '@type': 'ListItem',
+        'position': 2,
+        'name': 'Privacy Policy',
+        'item': 'https://www.kiscontinental.com/privacy-policy'
+      }
+    ]
+  };
+
   return (
     <>
+      <JsonLd data={breadcrumb} />
       <section className={styles.hero}>
         <div className="container">
           <div className="page-hero__label">Legal</div>
@@ -47,7 +71,7 @@ export default function PrivacyPolicyPage() {
             <h2>9. Contact Us</h2>
             <p>For any questions regarding this Privacy Policy, contact us at:<br />
             <strong>Kiran Industries</strong><br />
-            Sy. #659/2, Mustor Road, Manavi – 583123, Raichur District, Karnataka<br />
+            Sy. #659/2, Mustor Road, Manvi – 583123, Raichur District, Karnataka<br />
             Email: {company.contact.email}<br />
             Phone: {company.contact.phone1}</p>
           </div>

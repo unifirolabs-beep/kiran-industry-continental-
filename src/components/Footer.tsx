@@ -63,7 +63,7 @@ export default function Footer() {
       {/* Main Footer */}
       <div className={styles.footerMain}>
         <div className={styles.footerInner}>
-          <Row gutter={[48, 40]}>
+          <Row gutter={0}>
             {/* Brand Column */}
             <Col xs={24} sm={24} md={8} lg={8}>
               <div className={styles.brand}>

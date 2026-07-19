@@ -1,15 +1,39 @@
 import React from 'react';
 import { company } from '@/data/company';
+import { buildMetadata } from '@/utils/seo';
+import JsonLd from '@/components/JsonLd';
 import styles from '../privacy-policy/legal.module.css';
 
-export const metadata = {
-  title: 'Terms of Service — Kiran Industries | Continental',
-  description: 'Terms of Service for Kiran Industries website and Continental brand products.',
-};
+export const metadata = buildMetadata({
+  title: 'Terms & Conditions | Kiran Industries | Continental',
+  description: 'Read the terms of use and conditions for the Kiran Industries website and Continental brand construction material products and services.',
+  path: '/terms',
+  keywords: 'Terms and conditions Kiran Industries, website terms of use, legal agreements',
+});
 
 export default function TermsPage() {
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      {
+        '@type': 'ListItem',
+        'position': 1,
+        'name': 'Home',
+        'item': 'https://www.kiscontinental.com'
+      },
+      {
+        '@type': 'ListItem',
+        'position': 2,
+        'name': 'Terms of Service',
+        'item': 'https://www.kiscontinental.com/terms'
+      }
+    ]
+  };
+
   return (
     <>
+      <JsonLd data={breadcrumb} />
       <section className={styles.hero}>
         <div className="container">
           <div className="page-hero__label">Legal</div>

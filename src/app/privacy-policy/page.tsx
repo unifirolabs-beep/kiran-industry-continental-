@@ -1,6 +1,5 @@
 import React from 'react';
 import { company } from '@/data/company';
-import styles from './legal.module.css';
 
 export const metadata = {
   title: 'Privacy Policy — Kiran Industries | Continental',
@@ -10,7 +9,7 @@ export const metadata = {
 export default function PrivacyPolicyPage() {
   return (
     <>
-      <section className={styles.hero}>
+      <section className="pt-[140px] pb-20 bg-gradient-to-br from-[#111111] via-[#1f1f1f] to-[#2a1f08] relative after:content-[''] after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_70%_50%,rgba(11,101,181,0.07)_0%,transparent_65%)]">
         <div className="container">
           <div className="page-hero__label">Legal</div>
           <h1 className="page-hero__title">Privacy Policy</h1>
@@ -19,7 +18,7 @@ export default function PrivacyPolicyPage() {
       </section>
       <section className="section">
         <div className="container">
-          <div className={styles.content}>
+          <div className="max-w-[800px] mx-auto [&_h2]:font-display [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#1A1A1A] [&_h2]:mt-10 [&_h2]:mb-3 [&_p]:text-[15px] [&_p]:text-[#595959] [&_p]:leading-[1.85] [&_p]:mb-4 [&_strong]:text-[#1A1A1A] [&_strong]:font-semibold">
             <h2>1. Information We Collect</h2>
             <p>When you use our website, we may collect personal information such as your name, email address, phone number, and business details when you fill out contact, quote, or dealer inquiry forms.</p>
 

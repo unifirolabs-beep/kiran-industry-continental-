@@ -1,0 +1,7 @@
+# robots.txt for https://www.kiscontinental.com/
+User-agent: *
+Allow: /
+
+# Host & Sitemaps
+Host: https://www.kiscontinental.com
+Sitemap: https://www.kiscontinental.com/sitemap.xml

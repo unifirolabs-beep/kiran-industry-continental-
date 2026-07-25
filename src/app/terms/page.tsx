@@ -1,8 +1,5 @@
 import React from 'react';
 import { company } from '@/data/company';
-import { buildMetadata } from '@/utils/seo';
-import JsonLd from '@/components/JsonLd';
-import styles from '../privacy-policy/legal.module.css';
 
 export const metadata = buildMetadata({
   title: 'Terms & Conditions | Kiran Industries | Continental',
@@ -33,8 +30,7 @@ export default function TermsPage() {
 
   return (
     <>
-      <JsonLd data={breadcrumb} />
-      <section className={styles.hero}>
+      <section className="pt-[140px] pb-20 bg-gradient-to-br from-[#111111] via-[#1f1f1f] to-[#2a1f08] relative after:content-[''] after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_70%_50%,rgba(11,101,181,0.07)_0%,transparent_65%)]">
         <div className="container">
           <div className="page-hero__label">Legal</div>
           <h1 className="page-hero__title">Terms of Service</h1>
@@ -43,7 +39,7 @@ export default function TermsPage() {
       </section>
       <section className="section">
         <div className="container">
-          <div className={styles.content}>
+          <div className="max-w-[800px] mx-auto [&_h2]:font-display [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#1A1A1A] [&_h2]:mt-10 [&_h2]:mb-3 [&_p]:text-[15px] [&_p]:text-[#595959] [&_p]:leading-[1.85] [&_p]:mb-4 [&_strong]:text-[#1A1A1A] [&_strong]:font-semibold">
             <h2>1. Acceptance of Terms</h2>
             <p>By accessing and using the Kiran Industries website, you agree to be bound by these Terms of Service. If you do not agree with any part of these terms, please do not use our website.</p>
 
@@ -57,10 +53,10 @@ export default function TermsPage() {
             <p>All content on this website, including text, images, logos, product names, and design elements, is the property of Kiran Industries and protected under applicable intellectual property laws. Unauthorized use is prohibited.</p>
 
             <h2>5. Disclaimer of Warranties</h2>
-            <p>This website is provided "as is" without any warranties of any kind, express or implied. Kiran Industries does not warrant that the website will be error-free or uninterrupted.</p>
+            <p>This website is provided &quot;as is&quot; without any warranties of any kind, express or implied. Kiran Industries does not warrant that the website will be error-free or uninterrupted.</p>
 
             <h2>6. Limitation of Liability</h2>
-            <p>Kiran Industries shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use of this website or our products beyond the product's purchase price.</p>
+            <p>Kiran Industries shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use of this website or our products beyond the product&apos;s purchase price.</p>
 
             <h2>7. Governing Law</h2>
             <p>These Terms of Service are governed by the laws of the State of Karnataka, India. Any disputes shall be subject to the exclusive jurisdiction of courts in Raichur, Karnataka.</p>

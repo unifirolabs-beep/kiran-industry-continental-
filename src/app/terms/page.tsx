@@ -1,5 +1,6 @@
 import React from 'react';
 import { company } from '@/data/company';
+import { buildMetadata } from '@/utils/seo';
 
 export const metadata = buildMetadata({
   title: 'Terms & Conditions | Kiran Industries | Continental',
@@ -9,24 +10,6 @@ export const metadata = buildMetadata({
 });
 
 export default function TermsPage() {
-  const breadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'Home',
-        'item': 'https://www.kiscontinental.com'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'Terms of Service',
-        'item': 'https://www.kiscontinental.com/terms'
-      }
-    ]
-  };
 
   return (
     <>

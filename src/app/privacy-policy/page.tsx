@@ -1,5 +1,6 @@
 import React from 'react';
 import { company } from '@/data/company';
+import { buildMetadata } from '@/utils/seo';
 
 export const metadata = buildMetadata({
   title: 'Privacy Policy | Kiran Industries Continental Brand',
@@ -9,25 +10,6 @@ export const metadata = buildMetadata({
 });
 
 export default function PrivacyPolicyPage() {
-  const breadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'Home',
-        'item': 'https://www.kiscontinental.com'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'Privacy Policy',
-        'item': 'https://www.kiscontinental.com/privacy-policy'
-      }
-    ]
-  };
-
   return (
     <>
       <section className="pt-[140px] pb-20 bg-gradient-to-br from-[#111111] via-[#1f1f1f] to-[#2a1f08] relative after:content-[''] after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_70%_50%,rgba(11,101,181,0.07)_0%,transparent_65%)]">

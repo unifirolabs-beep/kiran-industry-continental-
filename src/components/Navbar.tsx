@@ -275,27 +275,6 @@ export default function Navbar() {
     };
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
-
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [mobileOpen]);
-
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setMobileOpen(false);
-      }
-    };
-
-    window.addEventListener('keydown', onKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, []);
 
   // Lock scroll position when drawer is open, and restore it when closed
   useEffect(() => {

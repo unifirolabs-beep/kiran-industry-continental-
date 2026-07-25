@@ -1,4 +1,5 @@
-import React from 'react';
+'use client'
+
 import { Row, Col } from 'antd';
 import { DownloadOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { company } from '@/data/company';
@@ -19,36 +20,6 @@ const downloads = [
 ];
 
 export default function DownloadsPage() {
-  const webpageSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    'name': 'Downloads | Technical Catalogues & Data Sheets',
-    'description': 'Brochures, technical data sheets (TDS), and ISO certificates for Continental building materials.',
-    'publisher': {
-      '@type': 'Organization',
-      'name': 'Kiran Industries',
-      'logo': 'https://www.kiscontinental.com/favicon.ico'
-    }
-  };
-
-  const breadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'Home',
-        'item': 'https://www.kiscontinental.com'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'Downloads',
-        'item': 'https://www.kiscontinental.com/downloads'
-      }
-    ]
-  };
 
   return (
     <>

@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import { Row, Col, Steps, Collapse, Tag } from 'antd';
 import { CheckCircleFilled, ArrowRightOutlined } from '@ant-design/icons';
@@ -13,36 +15,6 @@ const applicationSteps = [
 ];
 
 export default function SolutionsPage() {
-  const solutionsServiceSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    'name': 'Continental Construction Material Solutions',
-    'provider': {
-      '@type': 'Organization',
-      'name': 'Kiran Industries',
-      'url': 'https://www.kiscontinental.com'
-    },
-    'description': 'Tailored material solutions and application specifications for residential, commercial, industrial, and infrastructure building projects.'
-  };
-
-  const breadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'Home',
-        'item': 'https://www.kiscontinental.com'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'Solutions',
-        'item': 'https://www.kiscontinental.com/solutions'
-      }
-    ]
-  };
 
   return (
     <>
@@ -176,13 +148,13 @@ export default function SolutionsPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-br from-primary to-primary-light">
+      <section className="py-20 bg-black">
         <div className="container text-center">
-          <h2 className="font-display text-4xl font-extrabold text-black mb-3">Not Sure Which Product to Choose?</h2>
-          <p className="text-base text-black/65 mb-8">Our technical team will help you select the right product for your project.</p>
+          <h2 className="font-display text-4xl font-extrabold text-white mb-3">Not Sure Which Product to Choose?</h2>
+          <p className="text-base text-white/65 mb-8">Our technical team will help you select the right product for your project.</p>
           <div className="flex gap-3 justify-center flex-wrap">
-            <Link href="/contact"><button className="py-3.5 px-8 bg-black text-white border-none rounded-lg text-sm font-semibold font-primary cursor-pointer transition-all duration-200 hover:bg-[#1A1A1A] hover:-translate-y-0.5">Talk to an Expert</button></Link>
-            <Link href="/products"><button className="py-3.5 px-8 bg-transparent text-black border-2 border-black/30 rounded-lg text-sm font-semibold font-primary cursor-pointer transition-all duration-200 hover:border-black hover:bg-black/7">View All Products</button></Link>
+            <Link href="/contact"><button className="py-3.5 px-8 bg-white text-black border-none rounded-lg text-sm font-semibold font-primary cursor-pointer transition-all duration-200 hover:bg-[#1A1A1A] hover:-translate-y-0.5">Talk to an Expert</button></Link>
+            <Link href="/products"><button className="py-3.5 px-8 bg-transparent text-white border-2 border-white/30 rounded-lg text-sm font-semibold font-primary cursor-pointer transition-all duration-200 hover:border-black hover:bg-black/7">View All Products</button></Link>
           </div>
         </div>
       </section>

@@ -95,8 +95,8 @@ export default function HomePage() {
       {/* ===== HERO ===== */}
       <section className="relative min-h-screen flex items-center overflow-hidden bg-[#111111]">
         <div className="absolute inset-0 z-0" />
-        <div className="absolute inset-0 z-[1] bg-[linear-gradient(105deg,rgba(0,0,0,0.88)_0%,rgba(0,0,0,0.7)_50%,rgba(0,0,0,0.3)_100%)]" />
-        <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-[120px] pb-20 w-full">
+        <div className="absolute inset-0 z-1 bg-[linear-gradient(105deg,rgba(0,0,0,0.88)_0%,rgba(0,0,0,0.7)_50%,rgba(0,0,0,0.3)_100%)]" />
+        <div className="relative z-10 max-w-7xl mx-auto px-6 pt-30 pb-20 w-full">
           <div className="flex items-center gap-2 text-xs font-semibold tracking-[0.15em] uppercase text-primary mb-6">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_var(--color-primary)] animate-pulse" />
             South India&apos;s Premier Construction Material Brand
@@ -104,7 +104,7 @@ export default function HomePage() {
           <h1 className="font-display text-[clamp(36px,8vw,80px)] font-black text-white leading-[1.05] tracking-[-0.03em] mb-6">
             Building Tomorrow
             <br />
-            <span className="text-primary bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">Stronger, Faster</span>
+            <span className="text-primary bg-linear-to-r from-primary to-primary-light bg-clip-text">Stronger, Faster</span>
             <br />
             With Continental
           </h1>

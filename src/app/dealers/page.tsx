@@ -1,7 +1,31 @@
+'use client'
+
 import React from 'react';
 import { Form, Input, Select, Button, Row, Col, App } from 'antd';
 import { TrophyOutlined, CustomerServiceOutlined, CarOutlined, ToolOutlined } from '@ant-design/icons';
 import { company } from '@/data/company';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup.object({
+  name: yup.string().required('Please enter your name'),
+  phone: yup
+    .string()
+    .required('Please enter phone number')
+    .matches(/^[6-9]\d{9}$/, 'Enter a valid phone number'),
+  email: yup
+    .string()
+    .email('Please enter a valid email')
+    .required('Email is required'),
+  business: yup.string().required('Business name is required'),
+  district: yup.string().required('District is required'),
+  experience: yup.string().required('Please select experience'),
+  investment: yup.string().required('Please select turnover'),
+  message: yup.string(),
+});
+
+type DealerFormData = yup.InferType<typeof schema>;
 
 const { TextArea } = Input;
 
@@ -13,34 +37,29 @@ const dealerBenefits = [
 ];
 
 export default function DealersPage() {
-  const orgSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    'name': 'Kiran Industries',
-    'url': 'https://www.kiscontinental.com',
-    'logo': 'https://www.kiscontinental.com/favicon.ico',
-    'description': 'Kiran Industries manufacturers premium Continental brand tile adhesives, dry mix mortars, ready plasters, and super grouts.'
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<DealerFormData>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      name: '',
+      phone: '',
+      email: '',
+      business: '',
+      district: '',
+      experience: '',
+      investment: '',
+      message: '',
+    },
+  });
 
-  const breadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'Home',
-        'item': 'https://www.kiscontinental.com'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'Dealers',
-        'item': 'https://www.kiscontinental.com/dealers'
-      }
-    ]
-  };
+  const onSubmit = async (data: DealerFormData) => {
+    console.log(data);
 
+    // await api call
+  };
   return (
     <>
       <section className="pt-[140px] pb-20 bg-gradient-to-br from-[#111111] via-[#1f1f1f] to-[#2a1f08] relative after:content-[''] after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_70%_50%,rgba(11,101,181,0.07)_0%,transparent_65%)]">
@@ -126,71 +145,187 @@ export default function DealersPage() {
               </div>
             </Col>
             <Col xs={24} lg={14}>
-              <div className="bg-white rounded-2xl p-9 shadow-[0_4px_20px_rgba(0,0,0,0.07)] border border-black/6">
-                <Form form={form} layout="vertical" onFinish={onFinish} requiredMark={false}>
-                  <Row gutter={16}>
-                    <Col xs={24} sm={12}>
-                      <Form.Item name="name" label="Full Name" rules={[{ required: true, message: 'Please enter your name' }]}>
-                        <Input placeholder="Your name" size="large" />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                      <Form.Item name="phone" label="Phone Number" rules={[{ required: true, message: 'Please enter phone' }]}>
-                        <Input placeholder="+91 XXXXXXXXXX" size="large" />
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                  <Row gutter={16}>
-                    <Col xs={24} sm={12}>
-                      <Form.Item name="email" label="Email Address" rules={[{ required: true, type: 'email', message: 'Please enter valid email' }]}>
-                        <Input placeholder="email@example.com" size="large" />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                      <Form.Item name="business" label="Business Name" rules={[{ required: true }]}>
-                        <Input placeholder="Your shop / company name" size="large" />
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                  <Row gutter={16}>
-                    <Col xs={24} sm={12}>
-                      <Form.Item name="district" label="District / Location" rules={[{ required: true }]}>
-                        <Input placeholder="District, State" size="large" />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                      <Form.Item name="experience" label="Years in Building Materials">
-                        <Select placeholder="Select experience" size="large">
-                          <Select.Option value="0-1">Less than 1 year</Select.Option>
-                          <Select.Option value="1-3">1–3 years</Select.Option>
-                          <Select.Option value="3-5">3–5 years</Select.Option>
-                          <Select.Option value="5+">5+ years</Select.Option>
-                        </Select>
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                  <Form.Item name="investment" label="Expected Monthly Turnover (₹)">
-                    <Select placeholder="Select range" size="large">
-                      <Select.Option value="0-2L">Up to ₹2 Lakh</Select.Option>
-                      <Select.Option value="2-5L">₹2–5 Lakh</Select.Option>
-                      <Select.Option value="5-10L">₹5–10 Lakh</Select.Option>
-                      <Select.Option value="10L+">₹10 Lakh+</Select.Option>
-                    </Select>
-                  </Form.Item>
-                  <Form.Item name="message" label="Additional Information">
-                    <TextArea rows={3} placeholder="Tell us about your business and dealership interest..." />
-                  </Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={loading}
-                    size="large"
-                    block
-                    style={{ background: '#0B65B5', borderColor: '#0B65B5', color: '#000', fontWeight: 700, height: 48 }}
+              <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-lg">
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="space-y-5"
+                >
+                  <div className="grid gap-5 md:grid-cols-2">
+                    {/* Name */}
+                    <div>
+                      <label className="mb-2 block text-sm font-semibold text-gray-800">
+                        Full Name
+                      </label>
+
+                      <input
+                        {...register('name')}
+                        placeholder="Your name"
+                        className="h-12 w-full rounded-lg border border-gray-300 px-4 outline-none transition focus:border-primary"
+                      />
+
+                      {errors.name && (
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.name.message}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Phone */}
+                    <div>
+                      <label className="mb-2 block text-sm font-semibold text-gray-800">
+                        Phone Number
+                      </label>
+
+                      <input
+                        {...register('phone')}
+                        placeholder="+91 XXXXXXXXXX"
+                        className="h-12 w-full rounded-lg border border-gray-300 px-4 outline-none transition focus:border-primary"
+                      />
+
+                      {errors.phone && (
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.phone.message}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                      <label className="mb-2 block text-sm font-semibold text-gray-800">
+                        Email Address
+                      </label>
+
+                      <input
+                        type="email"
+                        {...register('email')}
+                        placeholder="email@example.com"
+                        className="h-12 w-full rounded-lg border border-gray-300 px-4 outline-none transition focus:border-primary"
+                      />
+
+                      {errors.email && (
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.email.message}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Business */}
+                    <div>
+                      <label className="mb-2 block text-sm font-semibold text-gray-800">
+                        Business Name
+                      </label>
+
+                      <input
+                        {...register('business')}
+                        placeholder="Your shop / company name"
+                        className="h-12 w-full rounded-lg border border-gray-300 px-4 outline-none transition focus:border-primary"
+                      />
+
+                      {errors.business && (
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.business.message}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* District */}
+                    <div>
+                      <label className="mb-2 block text-sm font-semibold text-gray-800">
+                        District / Location
+                      </label>
+
+                      <input
+                        {...register('district')}
+                        placeholder="District, State"
+                        className="h-12 w-full rounded-lg border border-gray-300 px-4 outline-none transition focus:border-primary"
+                      />
+
+                      {errors.district && (
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.district.message}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Experience */}
+                    <div>
+                      <label className="mb-2 block text-sm font-semibold text-gray-800">
+                        Years in Building Materials
+                      </label>
+
+                      <select
+                        {...register('experience')}
+                        className="h-12 w-full rounded-lg border border-gray-300 bg-white px-4 outline-none transition focus:border-primary"
+                      >
+                        <option value="">Select experience</option>
+                        <option value="0-1">Less than 1 year</option>
+                        <option value="1-3">1–3 years</option>
+                        <option value="3-5">3–5 years</option>
+                        <option value="5+">5+ years</option>
+                      </select>
+
+                      {errors.experience && (
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.experience.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Turnover */}
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold text-gray-800">
+                      Expected Monthly Turnover (₹)
+                    </label>
+
+                    <select
+                      {...register('investment')}
+                      className="h-12 w-full rounded-lg border border-gray-300 bg-white px-4 outline-none transition focus:border-primary"
+                    >
+                      <option value="">Select range</option>
+                      <option value="0-2L">Up to ₹2 Lakh</option>
+                      <option value="2-5L">₹2–5 Lakh</option>
+                      <option value="5-10L">₹5–10 Lakh</option>
+                      <option value="10L+">₹10 Lakh+</option>
+                    </select>
+
+                    {errors.investment && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.investment.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Message */}
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold text-gray-800">
+                      Additional Information
+                    </label>
+
+                    <textarea
+                      rows={4}
+                      {...register('message')}
+                      placeholder="Tell us about your business and dealership interest..."
+                      className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-primary"
+                    />
+
+                    {errors.message && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.message.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="flex h-12 w-full items-center justify-center rounded-lg bg-[#0B65B5] font-bold text-white transition hover:bg-[#09589e] disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    Submit Dealer Application
-                  </Button>
-                </Form>
+                    {isSubmitting
+                      ? 'Submitting...'
+                      : 'Submit Dealer Application'}
+                  </button>
+                </form>
               </div>
             </Col>
           </Row>

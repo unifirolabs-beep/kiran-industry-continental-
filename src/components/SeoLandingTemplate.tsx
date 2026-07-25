@@ -136,7 +136,7 @@ export default function SeoLandingTemplate({ config }: SeoLandingTemplateProps) 
               </Button>
             </Link>
             <Link href="/contact">
-              <Button className="!h-12 !px-7 !text-sm !font-bold !font-display !rounded-3xl !border-2 !border-white !bg-transparent !color-white !transition-all !duration-300 hover:!bg-white hover:!color-black hover:!-translate-y-px max-[480px]:!w-full max-[480px]:!h-11">
+              <Button className="!h-12 !px-7 !text-sm !font-bold !font-display !rounded-3xl !border-2 !border-white bg-transparent !color-white !transition-all !duration-300 hover:!bg-white hover:!color-black hover:!-translate-y-px max-[480px]:!w-full max-[480px]:!h-11">
                 Talk to an Expert
               </Button>
             </Link>

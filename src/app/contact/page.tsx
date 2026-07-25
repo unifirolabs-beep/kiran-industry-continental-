@@ -1,53 +1,33 @@
 'use client';
 
-import React, { useState } from 'react';
 import { Form, Input, Select, Button, Row, Col, App } from 'antd';
 import { EnvironmentOutlined, PhoneOutlined, MailOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import { company } from '@/data/company';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
-const { TextArea } = Input;
+const contactFormSchema = yup.object().shape({
+  fullName: yup.string().required('Name is required'),
+  email: yup.string().email('Email is invalid').required('Email is required'),
+  phoneNumber: yup.string().matches(/^[0-9]{10}$/, "Phone number must be 10 digits").required('Phone is required'),
+  subject: yup.string().required('Subject is required'),
+  message: yup.string().required('Message is required'),
+});
 
 export default function ContactPage() {
-  const contactSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ContactPage',
-    'name': 'Contact Kiran Industries',
-    'description': 'Contact information for Kiran Industries / Continental sales and support.',
-    'url': 'https://www.kiscontinental.com/contact',
-    'mainEntity': {
-      '@type': 'Organization',
-      'name': 'Kiran Industries',
-      'telephone': '+91 99168 05972',
-      'email': 'Infoandsalesconnect@kiscontinental.com',
-      'address': {
-        '@type': 'PostalAddress',
-        'streetAddress': 'Sy. #659/2, Mustor Road, Manvi – 583123',
-        'addressLocality': 'Manvi',
-        'addressRegion': 'Karnataka',
-        'postalCode': '583123',
-        'addressCountry': 'India'
-      }
-    }
-  };
 
-  const breadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'Home',
-        'item': 'https://www.kiscontinental.com'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'Contact Us',
-        'item': 'https://www.kiscontinental.com/contact'
-      }
-    ]
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<yup.InferType<typeof contactFormSchema>>({
+    resolver: yupResolver(contactFormSchema),
+  });
+
+  const onSubmit = (data: yup.InferType<typeof contactFormSchema>) => {
+    console.log(data);
+  }
 
   return (
     <>
@@ -122,45 +102,133 @@ export default function ContactPage() {
               <div className="section-label">Send Message</div>
               <h2 className="section-title" style={{ fontSize: 28 }}>Send Us a Message</h2>
               <div className="bg-white rounded-2xl p-8 shadow-[0_4px_20px_rgba(0,0,0,0.07)] border border-black/6">
-                <Form form={form} layout="vertical" onFinish={onFinish} requiredMark={false}>
-                  <Row gutter={16}>
-                    <Col xs={24} sm={12}>
-                      <Form.Item name="name" label="Full Name" rules={[{ required: true }]}>
-                        <Input placeholder="Your name" size="large" />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                      <Form.Item name="phone" label="Phone" rules={[{ required: true }]}>
-                        <Input placeholder="+91 XXXXXXXXXX" size="large" />
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                  <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email' }]}>
-                    <Input placeholder="email@example.com" size="large" />
-                  </Form.Item>
-                  <Form.Item name="subject" label="Subject">
-                    <Select placeholder="Select a topic" size="large">
-                      <Select.Option value="product">Product Inquiry</Select.Option>
-                      <Select.Option value="quote">Request a Quote</Select.Option>
-                      <Select.Option value="dealer">Dealership Inquiry</Select.Option>
-                      <Select.Option value="technical">Technical Support</Select.Option>
-                      <Select.Option value="other">Other</Select.Option>
-                    </Select>
-                  </Form.Item>
-                  <Form.Item name="message" label="Message" rules={[{ required: true }]}>
-                    <TextArea rows={5} placeholder="Type your message here..." />
-                  </Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={loading}
-                    size="large"
-                    block
-                    style={{ background: '#0B65B5', borderColor: '#0B65B5', color: '#000', fontWeight: 700, height: 48 }}
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                  {/* Name & Phone */}
+                  <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                    <div>
+                      <label className="mb-2 block text-sm font-semibold text-gray-700">
+                        Full Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Enter your full name"
+                        {...register("fullName")}
+                        className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      />
+                      {errors.fullName && (
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.fullName.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="mb-2 block text-sm font-semibold text-gray-700">
+                        Phone Number <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        placeholder="+91 XXXXXXXXXX"
+                        {...register("phoneNumber")}
+                        className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      />
+                      {errors.phoneNumber && (
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.phoneNumber.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold text-gray-700">
+                      Email Address <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      placeholder="you@example.com"
+                      {...register("email")}
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    />
+                    {errors.email && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.email.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Subject */}
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold text-gray-700">
+                      Subject <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="How can we help?"
+                      {...register("subject")}
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    />
+                    {errors.subject && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.subject.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Message */}
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold text-gray-700">
+                      Message <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      rows={5}
+                      placeholder="Write your message..."
+                      {...register("message")}
+                      className="w-full resize-none rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    />
+                    {errors.message && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.message.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Submit */}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="flex h-12 w-full items-center justify-center rounded-xl bg-primary font-semibold text-white transition hover:bg-primary-light disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    Send Message
-                  </Button>
-                </Form>
+                    {isSubmitting ? (
+                      <>
+                        <svg
+                          className="mr-2 h-5 w-5 animate-spin"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                          />
+                        </svg>
+                        Sending...
+                      </>
+                    ) : (
+                      "Send Message"
+                    )}
+                  </button>
+                </form>
               </div>
             </Col>
 

@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import { Row, Col, Rate } from 'antd';
 import { HomeOutlined, BankOutlined, ToolOutlined, ApartmentOutlined, FlagOutlined, TeamOutlined } from '@ant-design/icons';
@@ -17,33 +19,6 @@ const industryIcons: Record<string, React.ReactNode> = {
 };
 
 export default function CustomersPage() {
-  const orgSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    'name': 'Kiran Industries',
-    'url': 'https://www.kiscontinental.com',
-    'logo': 'https://www.kiscontinental.com/favicon.ico',
-    'description': 'Kiran Industries manufacturers premium Continental brand tile adhesives, dry mix mortars, ready plasters, and super grouts.'
-  };
-
-  const breadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'Home',
-        'item': 'https://www.kiscontinental.com'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'Our Customers',
-        'item': 'https://www.kiscontinental.com/customers'
-      }
-    ]
-  };
 
   return (
     <>

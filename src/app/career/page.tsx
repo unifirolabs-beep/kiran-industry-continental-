@@ -1,50 +1,67 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
-import { Form, Input, Select, Upload, Button, Row, Col, App } from 'antd';
+import { Input } from 'antd';
 import {
-  UploadOutlined,
   DownOutlined,
   UpOutlined,
 } from '@ant-design/icons';
 import { openPositions, JobPosition, company } from '@/data/company';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+
+const jobApplicationFormSchema = yup.object({
+  fullName: yup.string().required('Full Name is required'),
+  email: yup.string().email('Email is invalid').required('Email is required'),
+  phone: yup.string().matches(/^[0-9]{10}$/, 'Phone is invalid').required('Phone is required'),
+  position: yup.string().required('Position is required'),
+  location: yup.string().required('Location is required'),
+  experience: yup.string().required('Experience is required'),
+  resume: yup.mixed()
+    .test('fileSize', 'Resume size must be less than 2MB', (file: any) => {
+      if (!file) return true;
+      return file.size <= 2000000;
+    })
+    .test('fileType', 'Resume must be a PDF or Word document', (file: any) => {
+      if (!file) return true;
+      return file.type === 'application/pdf' || file.type === 'application/msword' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+    })
+    .required('Resume is required'),
+  message: yup.string().required('Message is required'),
+})
 
 const { TextArea } = Input;
 
 export default function CareerPage() {
-  const jobPostings = openPositions.map((job) => ({
-    '@context': 'https://schema.org',
-    '@type': 'JobPosting',
-    'title': job.title,
-    'description': `${job.description}\n\nDepartment: ${job.department}\nExperience: ${job.experience}\nQualification: ${job.qualification}\n\nResponsibilities:\n${job.responsibilities.join('\n')}\n\nRequirements:\n${job.requirements.join('\n')}`,
-    'datePosted': '2025-06-01',
-    'validThrough': '2026-12-31',
-    'employmentType': 'FULL_TIME',
-    'hiringOrganization': {
-      '@type': 'Organization',
-      'name': 'Kiran Industries',
-      'sameAs': 'https://www.kiscontinental.com',
-      'logo': 'https://www.kiscontinental.com/favicon.ico'
-    },
-    'jobLocation': {
-      '@type': 'Place',
-      'address': {
-        '@type': 'PostalAddress',
-        'addressLocality': job.location,
-        'addressRegion': job.location === 'Bengaluru' || job.location === 'Hubli' || job.location === 'Dharwad' || job.location === 'Belagavi' || job.location === 'Bijapur' || job.location === 'Koppala' || job.location === 'Kalaburagi' || job.location === 'Bidar' || job.location === 'Raichur' ? 'Karnataka' : 'South India',
-        'addressCountry': 'India'
-      }
-    }
-  }));
+  const [expandedJobId, setExpandedJobId] = useState<number | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const onFinish = async (values: Record<string, unknown>) => {
-    setLoading(true);
-    // Simulate API call
-    await new Promise((r) => setTimeout(r, 1200));
-    setLoading(false);
-    message.success('Application submitted successfully! Our HR team will contact you.');
-    form.resetFields();
+  const { register, setValue, handleSubmit, formState: { errors, isSubmitting } } = useForm<yup.InferType<typeof jobApplicationFormSchema>>({
+    resolver: yupResolver(jobApplicationFormSchema),
+    defaultValues: {
+      fullName: '',
+      email: '',
+      phone: '',
+      position: '',
+      location: '',
+      experience: '',
+      resume: undefined,
+      message: '',
+    },
+  });
+
+  const onSubmit = (data: yup.InferType<typeof jobApplicationFormSchema>) => {
+    console.log(data);
+  };
+
+  const handleApplyNowClick = () => {
+    formRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   const uniqueTitles = Array.from(new Set(openPositions.map((p) => p.title)));
@@ -144,11 +161,11 @@ export default function CareerPage() {
                     </div>
 
                     {/* Collapsible Details Drawer */}
-                    <div className={`max-h-0 overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 w-full ${isExpanded ? 'max-h-[1000px] opacity-1 mt-5 border-t border-dashed border-[#eaeaea] pt-5' : ''}`}>
+                    <div className={`max-h-0 overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 w-full ${isExpanded ? 'max-h-[1000px] opacity-100 mt-5 border-t border-dashed border-[#eaeaea] pt-5' : ''}`}>
                       <p style={{ color: 'rgba(0,0,0,0.7)', fontSize: 14, marginBottom: 20, lineHeight: 1.6 }}>
                         {job.description}
                       </p>
-                      
+
                       <div className="grid grid-cols-2 gap-6 mb-4 max-md:grid-cols-1 max-md:gap-4">
                         <div>
                           <div className="font-display text-[14px] font-bold text-charcoal uppercase tracking-wider mb-2.5">Key Responsibilities</div>
@@ -174,7 +191,7 @@ export default function CareerPage() {
                       </div>
 
                       <div className="flex justify-end gap-4 mt-4 border-t border-[#f0f0f0] pt-4">
-                        <button className="bg-primary text-white py-2 px-5 rounded font-semibold text-[13px] transition-colors duration-200 hover:bg-primary-light" onClick={() => handleApply(job)}>
+                        <button className="bg-primary text-white py-2 px-5 rounded font-semibold text-[13px] transition-colors duration-200 hover:bg-primary-light" onClick={() => handleApplyNowClick()}>
                           Apply For This Role
                         </button>
                       </div>
@@ -235,99 +252,216 @@ export default function CareerPage() {
               We are always seeking talented individuals to join our sales, logistics, and production teams.
             </p>
 
-            <Form form={form} layout="vertical" onFinish={onFinish} requiredMark={false}>
-              <Row gutter={16}>
-                <Col xs={24} sm={12}>
-                  <Form.Item name="name" label="Full Name" rules={[{ required: true, message: 'Please enter your name' }]}>
-                    <Input placeholder="Your full name" size="large" />
-                  </Form.Item>
-                </Col>
-                <Col xs={24} sm={12}>
-                  <Form.Item name="phone" label="Phone Number" rules={[{ required: true, message: 'Please enter your phone number' }]}>
-                    <Input placeholder="+91 XXXXXXXXXX" size="large" />
-                  </Form.Item>
-                </Col>
-              </Row>
+            <div className="flex justify-center">
+              <form
+                ref={formRef}
+                id="apply-form"
+                onSubmit={handleSubmit(onSubmit)}
+                encType="multipart/form-data"
+                className="w-full max-w-4xl rounded-3xl bg-white p-8 shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-black/5 space-y-6"
+              >
+                {/* Name & Phone */}
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold text-gray-700">
+                      Full Name
+                    </label>
 
-              <Form.Item name="email" label="Email Address" rules={[{ required: true, type: 'email', message: 'Please enter a valid email' }]}>
-                <Input placeholder="email@example.com" size="large" />
-              </Form.Item>
+                    <input
+                      type="text"
+                      {...register('fullName')}
+                      placeholder="Enter your full name"
+                      className="h-12 w-full rounded-xl border border-gray-300 px-4 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    />
 
-              <Row gutter={16}>
-                <Col xs={24} sm={12}>
-                  <Form.Item name="position" label="Position Applying For" rules={[{ required: true, message: 'Please select a position' }]}>
-                    <Select placeholder="Select position" size="large">
+                    {errors.fullName && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.fullName.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold text-gray-700">
+                      Phone Number
+                    </label>
+
+                    <input
+                      type="tel"
+                      {...register('phone')}
+                      placeholder="9876543210"
+                      className="h-12 w-full rounded-xl border border-gray-300 px-4 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    />
+
+                    {errors.phone && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.phone.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-gray-700">
+                    Email Address
+                  </label>
+
+                  <input
+                    type="email"
+                    {...register('email')}
+                    placeholder="john@example.com"
+                    className="h-12 w-full rounded-xl border border-gray-300 px-4 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  />
+
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.email.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Position & Location */}
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold text-gray-700">
+                      Position Applying For
+                    </label>
+
+                    <select
+                      {...register('position')}
+                      className="h-12 w-full rounded-xl border border-gray-300 bg-white px-4 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    >
+                      <option value="">Select Position</option>
+
                       {uniqueTitles.map((title) => (
-                        <Select.Option key={title} value={title}>{title}</Select.Option>
+                        <option key={title} value={title}>
+                          {title}
+                        </option>
                       ))}
-                      <Select.Option value="Other">Other / Open Application</Select.Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col xs={24} sm={12}>
-                  <Form.Item name="location" label="Preferred Work Location" rules={[{ required: true, message: 'Please select preferred location' }]}>
-                    <Select placeholder="Select location" size="large">
-                      {uniqueLocations.map((loc) => (
-                        <Select.Option key={loc} value={loc}>{loc}</Select.Option>
+
+                      <option value="Other">
+                        Other / Open Application
+                      </option>
+                    </select>
+
+                    {errors.position && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.position.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold text-gray-700">
+                      Preferred Location
+                    </label>
+
+                    <select
+                      {...register('location')}
+                      className="h-12 w-full rounded-xl border border-gray-300 bg-white px-4 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    >
+                      <option value="">Select Location</option>
+
+                      {uniqueLocations.map((location) => (
+                        <option key={location} value={location}>
+                          {location}
+                        </option>
                       ))}
-                      <Select.Option value="Any">Any Location in Karnataka</Select.Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-              </Row>
 
-              <Row gutter={16}>
-                <Col xs={24}>
-                  <Form.Item name="experience" label="Total Experience" rules={[{ required: true, message: 'Please select experience range' }]}>
-                    <Select placeholder="Years of experience" size="large">
-                      <Select.Option value="fresher">Fresher</Select.Option>
-                      <Select.Option value="1-2">1–2 years</Select.Option>
-                      <Select.Option value="3-5">3–5 years</Select.Option>
-                      <Select.Option value="5-10">5–10 years</Select.Option>
-                      <Select.Option value="10+">10+ years</Select.Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-              </Row>
+                      <option value="Any">
+                        Any Location
+                      </option>
+                    </select>
 
-              <Form.Item
-                name="resume"
-                label="Upload Resume"
-                valuePropName="fileList"
-                getValueFromEvent={(e) => {
-                  if (Array.isArray(e)) {
-                    return e;
-                  }
-                  return e?.fileList;
-                }}
-                rules={[{ required: true, message: 'Please upload your resume' }]}
-              >
-                <Upload
-                  accept=".pdf,.doc,.docx"
-                  maxCount={1}
-                  beforeUpload={() => false}
+                    {errors.location && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.location.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Experience */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-gray-700">
+                    Total Experience
+                  </label>
+
+                  <select
+                    {...register('experience')}
+                    className="h-12 w-full rounded-xl border border-gray-300 bg-white px-4 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  >
+                    <option value="">Select Experience</option>
+                    <option value="Fresher">Fresher</option>
+                    <option value="1-2">1–2 Years</option>
+                    <option value="3-5">3–5 Years</option>
+                    <option value="5-10">5–10 Years</option>
+                    <option value="10+">10+ Years</option>
+                  </select>
+
+                  {errors.experience && (
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.experience.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Resume */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-gray-700">
+                    Upload Resume
+                  </label>
+
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx"
+                    onChange={(e) =>
+                      setValue('resume', e.target.files?.[0] as any, {
+                        shouldValidate: true,
+                      })
+                    }
+                    className="block w-full rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-3 file:mr-4 file:rounded-lg file:border-0 file:bg-primary file:px-5 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-primary/90"
+                  />
+
+                  {errors.resume && (
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.resume.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Cover Letter */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-gray-700">
+                    Cover Letter / Message
+                  </label>
+
+                  <textarea
+                    rows={5}
+                    {...register('message')}
+                    placeholder="Tell us why you would like to join Kiran Industries..."
+                    className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  />
+
+                  {errors.message && (
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.message.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex h-14 w-full items-center justify-center rounded-xl bg-primary text-lg font-bold text-white transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  <Button icon={<UploadOutlined />} size="large" style={{ width: '100%' }}>
-                    Upload Resume (PDF / DOC)
-                  </Button>
-                </Upload>
-              </Form.Item>
+                  {isSubmitting ? 'Submitting...' : 'Submit Application'}
+                </button>
+              </form>
+            </div>
 
-              <Form.Item name="message" label="Cover Letter / Message">
-                <TextArea rows={4} placeholder="Tell us why you want to join Kiran Industries..." />
-              </Form.Item>
-
-              <Button
-                type="primary"
-                htmlType="submit"
-                loading={loading}
-                size="large"
-                block
-                style={{ background: '#0B65B5', borderColor: '#0B65B5', color: '#fff', fontWeight: 700, height: 48 }}
-              >
-                Submit Application
-              </Button>
-            </Form>
           </div>
         </div>
       </section>

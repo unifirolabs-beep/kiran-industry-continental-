@@ -18,38 +18,10 @@ const galleryItems = [
 const aspectRatios = ['aspect-[3/4]', 'aspect-[1/1]', 'aspect-[4/3]'];
 
 export default function GalleryPage() {
-  const gallerySchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ImageGallery',
-    'name': 'Kiran Industries Manufacturing Facility Gallery',
-    'description': 'Media gallery displaying our fully automated 20 TPH manufacturing facility, warehouse, research lab, and construction projects across South India.',
-    'url': 'https://www.kiscontinental.com/gallery',
-    'image': [
-      'https://www.kiscontinental.com/images/gallery/manufacturing-facility.png',
-      'https://www.kiscontinental.com/images/gallery/warehouse.png',
-      'https://www.kiscontinental.com/images/gallery/construction-site.png',
-      'https://www.kiscontinental.com/images/gallery/iso-certifications.png'
-    ]
-  };
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [lightbox, setLightbox] = useState<string | null>(null);
 
-  const breadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'Home',
-        'item': 'https://www.kiscontinental.com'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'Media Gallery',
-        'item': 'https://www.kiscontinental.com/gallery'
-      }
-    ]
-  };
+  const filteredItems = activeCategory === 'All' ? galleryItems : galleryItems.filter((item) => item.cat === activeCategory);
 
   return (
     <>
@@ -86,7 +58,7 @@ export default function GalleryPage() {
 
           {/* Masonry Grid */}
           <div className="columns-4 gap-3 max-[1024px]:columns-3 max-[640px]:columns-2">
-            {filtered.map((item, i) => (
+            {filteredItems.map((item, i) => (
               <div
                 key={`${item.src}-${i}`}
                 className={`relative block w-full mb-3 break-inside-avoid rounded-lg overflow-hidden cursor-zoom-in group ${aspectRatios[i % 3]}`}

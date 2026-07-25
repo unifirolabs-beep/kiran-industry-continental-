@@ -1,4 +1,5 @@
-import React from 'react';
+'use client'
+
 import { Row, Col } from 'antd';
 import { CheckCircleFilled } from '@ant-design/icons';
 import Image from 'next/image';
@@ -6,42 +7,6 @@ import Link from 'next/link';
 import { manufacturing } from '@/data/company';
 
 export default function ManufacturingPage() {
-  const industrialSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'IndustrialBusiness',
-    'name': 'Kiran Industries Manufacturing Plant',
-    'description': '20 TPH capacity dry mix mortar plant in Manvi, Raichur District, Karnataka. Fully automated Plough Mixer technology and state-of-the-art quality control laboratory.',
-    'image': 'https://www.kiscontinental.com/images/gallery/manufacturing-facility.png',
-    'telephone': '+91 99168 05972',
-    'address': {
-      '@type': 'PostalAddress',
-      'streetAddress': 'Sy. #659/2, Mustor Road, Manvi – 583123',
-      'addressLocality': 'Manvi',
-      'addressRegion': 'Karnataka',
-      'postalCode': '583123',
-      'addressCountry': 'India'
-    }
-  };
-
-  const breadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'Home',
-        'item': 'https://www.kiscontinental.com'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'Manufacturing',
-        'item': 'https://www.kiscontinental.com/manufacturing'
-      }
-    ]
-  };
-
   return (
     <>
       <section className="pt-[140px] pb-20 bg-gradient-to-br from-[#111111] via-[#1f1f1f] to-[#2a1f08] relative after:content-[''] after:absolute after:inset-0 after:bg-[radial-gradient(ellipse_at_70%_50%,rgba(11,101,181,0.07)_0%,transparent_65%)]">
@@ -153,12 +118,12 @@ export default function ManufacturingPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-br from-primary to-primary-light">
+      <section className="py-20 bg-black">
         <div className="container text-center">
-          <h2 className="font-display text-4xl font-extrabold text-black mb-3">Interested in a Plant Visit?</h2>
-          <p className="text-base text-black/65 mb-8">Schedule a factory tour and see our production process firsthand.</p>
+          <h2 className="font-display text-4xl font-extrabold text-white mb-3">Interested in a Plant Visit?</h2>
+          <p className="text-base text-white/65 mb-8">Schedule a factory tour and see our production process firsthand.</p>
           <Link href="/contact">
-            <button className="py-3.5 px-8 bg-black text-white border-none rounded-lg text-sm font-semibold font-primary cursor-pointer transition-all duration-200 hover:bg-[#1A1A1A] hover:-translate-y-0.5">Schedule a Visit</button>
+            <button className="py-3.5 px-8 bg-white text-black border-none rounded-lg text-sm font-semibold font-primary cursor-pointer transition-all duration-200 hover:bg-[#f0f0f0] hover:-translate-y-0.5">Schedule a Visit</button>
           </Link>
         </div>
       </section>
